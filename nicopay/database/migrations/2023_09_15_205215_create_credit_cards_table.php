@@ -15,10 +15,12 @@ return new class extends Migration
     {
         Schema::create('credit_cards', function (Blueprint $table) {
             $table->id();
-			$table->unsignedBigInteger('user_id');
+			$table->foreignId('user_id');
 			$table->text('card_number');
+			$table->string('card_name');
 			$table->string('expiration_date');
             $table->timestamps();
+			$table->softDeletes();
         });
     }
 

@@ -1,9 +1,11 @@
 <?php
 
-use App\Http\Controllers\api\ApiTokenController;
-use Illuminate\Foundation\Application;
-use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Foundation\Application;
+use App\Http\Controllers\Api\ApiTokenController;
+use App\Http\Controllers\Balance\BalanceController;
+use App\Http\Controllers\Transactions\TransactionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,5 +35,9 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
 		Route::get('/', 'index')->name('cardsIndex');
 		Route::post('/save', 'save')->name('cardsSave');
 	});
+	
 	Route::resource('/ApiTokens', ApiTokenController::class);
+	Route::resource('/Balance', BalanceController::class);
+	Route::resource('/Transactions', TransactionController::class);
+
 });

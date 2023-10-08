@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
+use App\Models\Balance\Balance;
 use App\Models\Cards\ApiToken;
+use App\Models\Transactions\Transaction;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -68,5 +70,15 @@ class User extends Authenticatable
 	public function apiToken()
 	{
 		return $this->hasOne(ApiToken::class);
+	}
+
+	public function balance()
+	{
+		return $this->hasOne(Balance::class);
+	}
+
+	public function transactions()
+	{
+		return $this->hasMany(Transaction::class);
 	}
 }

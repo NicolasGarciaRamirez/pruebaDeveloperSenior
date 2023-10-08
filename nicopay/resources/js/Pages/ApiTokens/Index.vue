@@ -22,13 +22,14 @@
                             class="absolute top-0 right-0 mt-2 mx-3 p-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:ring focus:bg-blue-600"
                             @click="toggleApiKeyVisibility"
                         >
-                            {{ showApiKeyPublic ? 'Ocultar' : 'Mostrar' }}
+							<i v-if="showApiKeyPublic" class="fa-solid fa-eye"></i>
+							<i v-else class="fa-solid fa-eye-slash"></i>
                         </button>
                         <button
                             class="absolute top-0 right-12 mt-2 mx-3 p-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:ring focus:bg-blue-600"
-                            @click="copyToClipboard(apiKeyPublic)"
+                            @click="copyToClipboard(apiToken.key_public)"
                         >
-                            Copiar
+							<i class="fa-solid fa-copy"></i>
                         </button>
                     </div>
                 </div>
@@ -36,27 +37,28 @@
                     <label class="block text-gray-700 text-sm font-bold mb-2">
                         Clave Secreta API:
                     </label>
-                    <div class="relative">
-                        <input
+					<div class="relative w-full">
+						<input
 							v-model="apiSecretPublic"
-                            class="border rounded-lg py-2 px-3 w-full bg-gray-100 focus:outline-none focus:ring focus:border-blue-300"
-                            @blur="onBlur('apiSecretPublic')"
-                            readonly
-                        />
-                        <button
-                            class="absolute top-0 right-0 mt-2 mx-3 p-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:ring focus:bg-blue-600"
-                            @click="toggleApiSecretVisibility"
-                        >
-                            {{ showApiSecretPublic ? 'Ocultar' : 'Mostrar' }}
-                        </button>
-                        <button
-                            class="absolute top-0 right-12 mt-2 mx-3 p-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:ring focus:bg-blue-600"
-                            @click="copyToClipboard(apiSecretPublic)"
-                        >
-                            Copiar
-                        </button>
-                    </div>
-                </div>
+							class="border rounded-lg py-2 px-3 w-full bg-gray-100 focus:outline-none focus:ring focus:border-blue-300"
+							@blur="onBlur('apiSecretPublic')"
+							readonly
+						/>
+						<button
+							class="absolute top-2 right-2 p-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:ring focus:bg-blue-600"
+							@click="toggleApiSecretVisibility"
+						>
+							<i v-if="showApiSecretPublic" class="fa-solid fa-eye"></i>
+							<i v-else class="fa-solid fa-eye-slash"></i>
+						</button>
+						<button
+							class="absolute top-2 right-10 p-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:ring focus:bg-blue-600"
+							@click="copyToClipboard(apiToken.key_secret)"
+						>
+							<i class="fa-solid fa-copy"></i>
+						</button>
+					</div>
+				</div>
             </div>
             <div v-if="showCopiedMessage" class="text-green-600">
                 Clave copiada al portapapeles
@@ -72,11 +74,12 @@ import AppLayout from '@/Layouts/AppLayout.vue';
 export default {
     props: {
         apiToken: Object,
+		user: Object
     },
     components: { AppLayout },
     setup(props) {
-        const apiKeyPublic = ref('*********************');
-        const apiSecretPublic = ref('*********************');
+        const apiKeyPublic = ref('*************************************************************************');
+        const apiSecretPublic = ref('*************************************************************************');
         const showApiKeyPublic = ref(false);
         const showApiSecretPublic = ref(false);
         const showCopiedMessage = ref(false);
@@ -91,7 +94,7 @@ export default {
 			if (showApiKeyPublic.value){
 				apiKeyPublic.value = props.apiToken.key_public
 			}else{
-				apiKeyPublic.value = '**********************'
+				apiKeyPublic.value = '*************************************************************************'
 			}
 
         };
@@ -101,13 +104,14 @@ export default {
 			if (showApiSecretPublic.value){
 				apiSecretPublic.value = props.apiToken.key_secret
 			}else{
-				apiSecretPublic.value = '**********************'
+				apiSecretPublic.value = '*************************************************************************'
 			}
         };
 
         const copyToClipboard = (text) => {
+			console.log(text)
             const textField = document.createElement('textarea');
-            textField.innerText = text.value;
+            textField.innerText = text;
             document.body.appendChild(textField);
             textField.select();
             document.execCommand('copy');

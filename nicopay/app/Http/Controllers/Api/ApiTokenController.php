@@ -14,9 +14,9 @@ class ApiTokenController extends Controller
 	public function index()
     {
         // Recupera todos los tokens API
-        $user = auth()->user()->load('apiToken');
+        $user = auth()->user()->load('apiToken','balance');
         // Retorna una vista que muestra la lista de tokens API
-		return Inertia::render('ApiTokens/Index', ['apiToken' => $user->apiToken]);
+		return Inertia::render('ApiTokens/Index', ['apiToken' => $user->apiToken, 'user' => $user]);
     }
 
     public function create()

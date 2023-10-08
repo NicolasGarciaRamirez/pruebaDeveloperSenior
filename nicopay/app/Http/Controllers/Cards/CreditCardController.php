@@ -16,8 +16,8 @@ class CreditCardController extends Controller
 
 	public function index()
 	{
-		$response = auth()->user()->load('creditCards');
- 		return Inertia::render('Cards/index', ['response'=>$response->creditCards]);
+		$response = auth()->user()->load('creditCards','balance');
+ 		return Inertia::render('Cards/index', ['response'=>$response->creditCards, 'user' => $response]);
 	}
 
 

@@ -18,7 +18,7 @@ return new class extends Migration
 			$table->string('name');
 			$table->text('key_secret');
 			$table->text('key_public');
-			$table->unsignedBigInteger('user_id');
+			$table->foreignId('user_id');
             $table->timestamps();
         });
     }
